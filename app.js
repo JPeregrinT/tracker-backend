@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(cors())
 
 //routes
-readdirSync('./routes').map((routes) => app.use('/api/v1', require('./routes/' + routes)))
+readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + route)))
 
 const server = () => {
     db()
