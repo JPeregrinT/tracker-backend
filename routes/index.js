@@ -3,7 +3,7 @@ const generalRouter = express.Router();
 const loginRoutes = require("./login");
 const { jwtMiddleware, authRouter } = require("../security/jwt");
 
-//Router principal
+//Router principall
 generalRouter.use("/", authRouter);
 
 // Redirigir a middlewares de jwt
