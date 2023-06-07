@@ -10,6 +10,7 @@ require('dotenv').config()
 
 const PORT = process.env.PORT
 
+//Router principal
 const generalRouter = require('./routes');
  //middlewares   
 app.use(express.json())
