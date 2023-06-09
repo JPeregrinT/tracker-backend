@@ -11,14 +11,14 @@ const authRouter = express.Router();
      console.log(req.body);
   // * Make sure request has the email
   if (!email) {
-     return res.status(400).json({ error: { register: "Email not recieved" } });
+     return res.status(400).json({ error:  "Email not recieved"  });
    }
    const existingUser = await User.findOne({ email: email });
    // * If the user is found, return an error because there is already a user registered
    if (existingUser) {
     return res
       .status(400)
-       .json({ error: { email: "Email already registered" } });
+       .json({ error: "Email already registered"  });
    } else {
     const newUser = new User({
       email: data.email,
@@ -39,7 +39,7 @@ const authRouter = express.Router();
      } else {
        return res
          .status(500)
-         .json({ error: { firstName: "Error creating new User :(", err } });
+         .json({ error: "Error creating new User :(", err  });
          
      }
   }
@@ -50,19 +50,19 @@ const authRouter = express.Router();
   if (!email || !password) {
     return res
       .status(400)
-      .json({ error: { login: "Missing email or password" } });
+      .json({ error: "Missing email or password"  });
   }
   try {
     const foundUser = await User.findOne({ email });
     if (!foundUser) {
       return res
         .status(400)
-        .json({ error: { email: "User not found, please Register" } });
+        .json({ error: "User not found, please Register"  });
     }
     // * Validate password with bcrypt library
     if (!foundUser.comparePassword(password)) { 
       // if (foundUser.password !== password) {
-      return res.status(400).json({ error: { password: "Invalid Password" } });
+      return res.status(400).json({ error:  "Invalid Password"  });
     }
     // * if everything is ok, return the new token and user data
     return res.status(200).json({
@@ -76,7 +76,7 @@ const authRouter = express.Router();
   } catch (err) {
     return res
       .status(500)
-      .json({ error: { register: "Error Login in :(", error: err.message } });
+      .json({ error:  "Error Login in :(", error: err.message  });
   }
 });
 
