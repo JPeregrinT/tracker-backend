@@ -24,6 +24,7 @@ const authRouter = express.Router();
       email: data.email,
       password: data.password,
       name: data.name,
+      userImage: data.userImage
      });
      const savedUser = await newUser.save();
      if (savedUser) {
@@ -126,9 +127,12 @@ authRouter.get('/profile/modify/:userId?', (req, res) => {
   req.params.userId,
   
   {
-      $set: { email: data.email, 
+      $set:
+       { email: data.email, 
         password: data.password,
-        name: data.name}
+        name: data.name,
+        userImage: data.image
+      }
   },
   {
       new: true //actualiza datos
