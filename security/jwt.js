@@ -24,7 +24,10 @@ const authRouter = express.Router();
       email: data.email,
       password: data.password,
       name: data.name,
-      userImage: data.userImage
+      surName: data.surName,
+      userImage: data.userImage,
+      gender: data.gender,
+      birthdate: data.birthdate
      });
      const savedUser = await newUser.save();
      if (savedUser) {
