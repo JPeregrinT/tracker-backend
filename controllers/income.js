@@ -37,11 +37,11 @@ exports.getIncome = async (req, res) =>{
     }
 }
 
-exports.deleteIncomes = async (req, res) =>{
+exports.deleteIncome = async (req, res) =>{
     const {id} = req.params;
     IncomeSchema.findByIdAndDelete(id)
         .then((income) =>{
-            res.satus(200).json({message: 'Income Deleted'})
+            res.status(200).json({message: 'Income Deleted'})
         })
         .catch((err) =>{
             res.status(500).json({message: 'Server Error'})

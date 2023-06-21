@@ -20,7 +20,7 @@ exports.addExpense = async (req, res) => {
             return res.status(400).json({message: 'Amount must be a positive number'})
         }
         await expense.save()
-        res.status(200).json({message: 'Expense Added'})
+       res.status(200).json({message: 'Expense Added'})
     } catch (error){
         res.status(200).json({message: 'Server Error'})
     }
