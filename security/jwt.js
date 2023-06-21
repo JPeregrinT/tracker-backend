@@ -23,7 +23,7 @@ const authRouter = express.Router();
     const newUser = new User({
       email: data.email,
       password: data.password,
-      firstName: data.firstName,
+      name: data.name,
      });
      const savedUser = await newUser.save();
      if (savedUser) {
@@ -31,7 +31,7 @@ const authRouter = express.Router();
          token: savedUser.generateJWT(),
         user: {
            email: savedUser.email,
-           name: savedUser.firstName,
+           name: savedUser.name,
           id: savedUser._id,
          },
          
@@ -128,7 +128,7 @@ authRouter.get('/profile/modify/:userId?', (req, res) => {
   {
       $set: { email: data.email, 
         password: data.password,
-        firstName: data.firstName}
+        name: data.name}
   },
   {
       new: true //actualiza datos

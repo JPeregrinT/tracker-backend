@@ -7,7 +7,8 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     email: { type: String, required: true, unique: true, trim: true},
 	password: {type: String, required: true},
-	firstName: {type: String, required: false},
+	name: {type: String, required: false},
+	userImage: {type: String, required: false},
 });
 
 
@@ -45,7 +46,7 @@ UserSchema.methods.generateJWT = function() {
 	
 	let payload = {
 		id: this._id,
-		name: this.firstName,
+		name: this.name,
 		email: this.email,
 	};
 	// * This method is from the json-web-token library (who is in charge to generate the JWT
