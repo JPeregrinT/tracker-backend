@@ -119,6 +119,27 @@ const authRouter = express.Router();
         res.status(400).json({result: "No token valido"});
     }
 });
+//Modifica el perfil
+authRouter.get('/profile/modify/:userId?', (req, res) => {
+  const data = req.body;
+  User.findByIdAndUpdate(
+  req.params.userId,
+  
+  {
+      $set: { email: data.email, 
+        password: data.password,
+        firstName: data.firstName}
+  },
+  {
+      new: true //actualiza datos
+  }
+  )
+      .then(updatedUser => console.log('User updated: ', updatedUser))
+      .catch(err => console.log('Error while updating the student: ', err));
+  res.status(200).send('ok')
+
+  })
+
 module.exports = {
     authRouter,
     jwtMiddleware,
