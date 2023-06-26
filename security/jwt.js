@@ -117,12 +117,21 @@ const authRouter = express.Router();
         console.log('intentando')
         const decodedToken = jwt.verify(token, jwtSecret);
         console.log('decoded token es', decodedToken);
-        res.json({ info: decodedToken});
+        res.json( "Verificado");
     } catch (error) {
-        console.log('este es el error al verificar token');
-        res.status(400).json({result: "No token valido"});
+        console.log('este es el error al verificar token', error);
+        res.status(400).json({result: "No es un token valido"});
     }
 });
+//GET User, muestra los datos para el perfil
+authRouter.get ('/user', async (req, res) =>{
+  try {
+      const getUser = await UserSchema.find().sort({createdAt: -1})
+      res.status(200).json(getUser)
+  } catch (error){
+      res.status(500).json({message: 'Server Error'})
+  }
+})
 //Modifica el perfil
 authRouter.get('/profile/modify/:userId?', (req, res) => {
   const data = req.body;
@@ -134,7 +143,8 @@ authRouter.get('/profile/modify/:userId?', (req, res) => {
        { email: data.email, 
         password: data.password,
         name: data.name,
-        userImage: data.image
+        userImage: data.image,
+        upsert: false
       }
   },
   {
@@ -142,8 +152,8 @@ authRouter.get('/profile/modify/:userId?', (req, res) => {
   }
   )
       .then(updatedUser => console.log('User updated: ', updatedUser))
-      .catch(err => console.log('Error while updating the student: ', err));
-  res.status(200).send('ok')
+      .catch(err => console.log('Error while updating the user: ', err));
+  res.status(200).send('User update finished')
 
   })
 
