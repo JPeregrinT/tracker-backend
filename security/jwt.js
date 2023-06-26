@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require ("jsonwebtoken");
 const User = require("../models/User");
+const UserSchema= require("../models/User")
 const jwtSecret = process.env.JWT_SECRET;
 
 const authRouter = express.Router();
@@ -124,9 +125,11 @@ const authRouter = express.Router();
     }
 });
 //GET User, muestra los datos para el perfil
-authRouter.get ('/user', async (req, res) =>{
+authRouter.get ('/user/:userId?', async (req, res) =>{
+  
   try {
-      const getUser = await UserSchema.find().sort({createdAt: -1})
+      const getUser = await UserSchema.findById(req.params.userId).sort({createdAt: -1})
+      console.log('getUser', getUser)
       res.status(200).json(getUser)
   } catch (error){
       res.status(500).json({message: 'Server Error'})
