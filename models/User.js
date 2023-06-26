@@ -15,14 +15,36 @@ const UserSchema = new Schema({
 });
 
 
-//esta funcion se ejecuta "antes" de guardar cualquier usuario en Mongo
+//esta funcion se ejecuta "antes" de updatear cualquier usuario en Mongo
+UserSchema.pre('findOneAndUpdate',  function(next) {
+	const user = this._update.$set;
+	console.log("esto es password", user)
+
+	
+	if (!user.password) return next();
+		
+	
+	bcrypt.genSalt(10, function(err, salt) {
+		if (err) return next(err);
+		
+		bcrypt.hash(user.password, salt, function(err, hash) {
+			if (err) return next(err);
+
+			
+			user.password = hash;
+			console.log("hola", user.password)
+			next();
+		});
+	});
+});
+
 UserSchema.pre('save',  function(next) {
 	const user = this;
-
+	console.log("esto es user", user)
 	//si no se ha cambiado la contraseña, seguimos
 	if (!user.isModified('password')) return next();
 
-	//brcypt es una libreria que genera "hashes", encriptamos la contraseña
+	//encriptamos la contraseña
 	bcrypt.genSalt(10, function(err, salt) {
 		if (err) return next(err);
 
