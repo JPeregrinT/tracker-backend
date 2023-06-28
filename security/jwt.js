@@ -81,7 +81,7 @@ const authRouter = express.Router();
   } catch (err) {
     return res
       .status(500)
-      .json({ error:  "Error Login in :(", error: err.message  });
+      .json({ error:  "Error while logging in :(", error: err.message  });
   }
 });
 
@@ -136,7 +136,7 @@ authRouter.get ('/user/:userId?', async (req, res) =>{
   }
 })
 //Modifica el perfil
-authRouter.get('/profile/modify/:userId?', (req, res) => {
+authRouter.post('/profile/modify/:userId?', (req, res) => {
   const data = req.body;
   User.findByIdAndUpdate(
   req.params.userId,
@@ -146,7 +146,17 @@ authRouter.get('/profile/modify/:userId?', (req, res) => {
        { email: data.email, 
         password: data.password,
         name: data.name,
+        surName: data.surName,
+        gender: data.gender,
+        birthdate: data.birthdate,
+        phone: data.phone,
+        city: data.city,
+        country: data.country,
+        address: data.address,
+        homeNumber: data.number,
+        postcode: data.postCode,
         userImage: data.image,
+
         upsert: false
       }
   },
@@ -155,7 +165,7 @@ authRouter.get('/profile/modify/:userId?', (req, res) => {
   }
   )
       .then(updatedUser => console.log('User updated: ', updatedUser))
-      .catch(err => console.log('Error while updating the user: ', err));
+      .catch(res.status(400).json({error:'Error while updating the user '}))
   res.status(200).send('User update finished')
 
   })
