@@ -5,20 +5,26 @@ const secret = process.env.JWT_SECRET;
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    email: { type: String, required: true, unique: true, trim: true},
-	password: {type: String, required: true},
-	name: {type: String, required: false},
-	surName: {type: String, required: false},
-	gender: {type: String, required: false},
-	birthdate: {type: Date, required: false},
-	userImage: {type: String, required: false},
+    email: { type: String, required: true, unique: true, trim: true, set: a => a === '' ? undefined : a},
+	password: {type: String, required: true, set: b => b === '' ? undefined : b},
+	name: {type: String, required: false, set: c => c === '' ? undefined : c},
+	surName: {type: String, required: false, set: d => d === '' ? undefined : d},
+	gender: {type: String, required: false, set: e => e === '' ? undefined : e},
+	birthdate: {type: Date, required: false, set: f => f === '' ? undefined : f},
+	userImage: {type: String, required: false, set: g => g === '' ? undefined : g},
+	phone: {type: Number, required: false, set: h => h === '' ? undefined : h}, 
+	city: {type: String, required: false, set: i => i === '' ? undefined : i},
+	country: {type: String, required: false, set: j => j === '' ? undefined : j},
+	adress: {type: String, required: false, set: k => k === '' ? undefined : k},
+	homeNumber: {type: Number, required: false, set: l => l === '' ? undefined : l},
+	postcode: {type: Number, required: false, set: m => m === '' ? undefined : m},
 });
 
 
 //esta funcion se ejecuta "antes" de updatear cualquier usuario en Mongo
 UserSchema.pre('findOneAndUpdate',  function(next) {
 	const user = this._update.$set;
-	console.log("esto es password", user)
+	console.log("esto es user", user)
 
 	
 	if (!user.password) return next();
