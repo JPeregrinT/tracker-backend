@@ -1,14 +1,18 @@
 const IncomeSchema= require("../models/IncomeModel")
 
+
 exports.addIncome = async (req, res) => {
-    const {title, amount, category, description, date} = req.body
+    const {userId} = req.params;
+    console.log("user parmas", req.params )
+    const {title, amount, category, description, date,} = req.body
 
     const income = IncomeSchema({
         title,
         amount,
         category,
         description,
-        date
+        date,
+        userId
     })
 
     try {
@@ -16,21 +20,24 @@ exports.addIncome = async (req, res) => {
         if(!title || !category || !description || !date){
             return res.status(400).json({message: 'All fields are required!'})
         }
-        if(amount<=0 || amount !== 'number'){
+        if(amount<=0 || typeof amount !== 'number'){
             return res.status(400).json({message: 'Amount must be a positive number'})
         }
+        console.log ("income", income)
         await income.save()
        res.status(200).json({message: 'Income Added'})
     } catch (error){
-        res.status(200).json({message: 'Server Error'})
+        res.status(500).json(error => res.status(500).json({error:'Server error '}))
     }
 
     console.log(income)
 }
 
 exports.getIncome = async (req, res) =>{
+    const {userId} = req.params;
+console.log ("user id", userId)
     try {
-        const incomes = await IncomeSchema.find().sort({createdAt: -1})
+        const incomes = await IncomeSchema.find({userId}).sort({createdAt: -1})
         res.status(200).json(incomes)
     } catch (error){
         res.status(500).json({message: 'Server Error'})

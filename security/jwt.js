@@ -165,7 +165,7 @@ authRouter.post('/profile/modify/:userId?', (req, res) => {
   }
   )
       .then(updatedUser => console.log('User updated: ', updatedUser))
-      .catch(res.status(400).json({error:'Error while updating the user '}))
+      .catch(error => res.status(400).json({error:'Error while updating the user '}))
   res.status(200).send('User update finished')
 
   })
