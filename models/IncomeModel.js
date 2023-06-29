@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const {Schema} = mongoose
 
 const IncomeSchema = new mongoose.Schema({
     title: {
@@ -34,6 +34,11 @@ const IncomeSchema = new mongoose.Schema({
         maxLength: 20,
         trim: true
     },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref:"User",
+        required: false,
+    }
 }, {timestamps: true})
 
 module.exports = mongoose.model('Income', IncomeSchema)

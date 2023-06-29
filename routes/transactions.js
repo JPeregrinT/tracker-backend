@@ -3,8 +3,8 @@ const { addExpense, getExpense, deleteExpense } = require('../controllers/expens
 const router = require ('express').Router()
 
 
-router.post('/add-income', addIncome)
-    .get('/get-income', getIncome)
+router.post('/add-income/:userId', addIncome)
+    .get('/get-income/:userId', getIncome)
     .delete('/delete-income/:id', deleteIncome)
     .post('/add-expense', addExpense)
     .get('/get-expense', getExpense)
