@@ -1,4 +1,4 @@
-const TransactionSchema= require("../models/IncomeModel")
+const TransactionSchema= require("../models/TransactionModel")
 
 exports.addIncome = async (req, res) => {
     const {userId} = req.params;
@@ -37,7 +37,7 @@ exports.addIncome = async (req, res) => {
 exports.getIncome = async (req, res) =>{
     const {userId} = req.params;
     try {
-        const incomes = await TransactionSchema.find({userId}).sort({createdAt: -1})
+        const incomes = await TransactionSchema.find({userId, type: "Income"}).sort({createdAt: -1})
 
         res.status(200).json(incomes)
     } catch (error){

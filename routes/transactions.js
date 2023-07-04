@@ -6,8 +6,8 @@ const router = require ('express').Router()
 router.post('/add-income/:userId', addIncome)
     .get('/get-income/:userId', getIncome)
     .delete('/delete-income/:id', deleteIncome)
-    .post('/add-expense', addExpense)
-    .get('/get-expense', getExpense)
+    .post('/add-expense/:userId', addExpense)
+    .get('/get-expense/:userId', getExpense)
     .delete('/delete-expense/:id', deleteExpense)
 
 module.exports = router
