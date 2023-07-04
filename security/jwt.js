@@ -110,20 +110,7 @@ const authRouter = express.Router();
     req.jwtPayload = tokenPayload;
     next();
   };
-//Login con token
-  authRouter.get("/me", (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    console.log('tokennnnnnn', token)
-    try {
-        console.log('intentando')
-        const decodedToken = jwt.verify(token, jwtSecret);
-        console.log('decoded token es', decodedToken);
-        res.json( "Verificado");
-    } catch (error) {
-        console.log('este es el error al verificar token', error);
-        res.status(400).json({result: "No es un token valido"});
-    }
-});
+
 //GET User, muestra los datos para el perfil
 authRouter.get ('/user/:userId?', async (req, res) =>{
   
