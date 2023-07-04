@@ -22,7 +22,7 @@ exports.deleteTransaction = async (req, res) =>{
         })
 }
 
-exports.getDashboard = async (req, res) =>{
+exports.getHistory = async (req, res) =>{
     const {userId} = req.params;
     try {
         const transactions = await TransactionSchema.find({userId})
