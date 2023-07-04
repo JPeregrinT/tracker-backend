@@ -17,17 +17,17 @@ exports.addExpense = async (req, res) => {
     try {
         //validations
         if(!title || !category || !description || !date){
-            return res.status(400).json({message: 'All fields are required!'})
+            return res.status(400).json({error: 'All fields are required!'})
         }
-        if(amount<=0 || typeof amount !== 'number'){
-            return res.status(400).json({message: 'Amount must be a positive number'})
-        }
-        console.log ("Esto es EXPENSE", expense)
-        
-        console.log("esto es date", date)
         await expense.save() 
        res.status(200).json({message: 'Expense Added'})
     } catch (error){
+        if (error.name === 'ValidationError') {
+            // Handle the specific error message for invalid currency amount
+            if (error.errors.amount && error.errors.amount.message === 'Invalid currency amount') {
+              return res.status(400).json({ error: 'Invalid currency amount provided' });
+            }
+        }
         res.status(500).json(error => res.status(500).json({error:'Server error '}))
     }
 
@@ -48,9 +48,9 @@ exports.getExpense = async (req, res) =>{
 
 exports.deleteExpense = async (req, res) =>{
     const {id} = req.params;
-    ExpenseSchema.findByIdAndDelete(id)
+    TransactionSchema.findByIdAndDelete(id)
         .then((expense) =>{
-            res.satus(200).json({message: 'Expense Deleted'})
+            res.status(200).json({message: 'Expense Deleted'})
         })
         .catch((err) =>{
             res.status(500).json({message: 'Server Error'})

@@ -5,7 +5,13 @@ const secret = process.env.JWT_SECRET;
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    email: { type: String, required: true, unique: true, trim: true, set: a => a === '' ? undefined : a},
+    email: { type: String, 
+		required: true, 
+		unique: true, 
+		trim: true, 
+		set: a => a === '' ? undefined : a,
+		validator: function (value) {
+			return /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/.test(value);}},
 	password: {type: String, required: true, set: b => b === '' ? undefined : b},
 	name: {type: String, required: false, set: c => c === '' ? undefined : c},
 	surName: {type: String, required: false, set: d => d === '' ? undefined : d},
