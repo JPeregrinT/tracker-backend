@@ -21,9 +21,17 @@ const UserSchema = new Schema({
 	phone: {type: Number, required: false, set: h => h === '' ? undefined : h}, 
 	city: {type: String, required: false, set: i => i === '' ? undefined : i},
 	country: {type: String, required: false, set: j => j === '' ? undefined : j},
-	adress: {type: String, required: false, set: k => k === '' ? undefined : k},
+	address: {type: String, required: false, set: k => k === '' ? undefined : k},
 	homeNumber: {type: Number, required: false, set: l => l === '' ? undefined : l},
-	postcode: {type: Number, required: false, set: m => m === '' ? undefined : m},
+	postCode: {type: Number, required: false, 
+		set: m => {
+			if (m === '') {
+			  return undefined;
+			} else {
+			  const parsedPostCode = parseInt(m);
+			  return isNaN(parsedPostCode) ? undefined : parsedPostCode;
+			}
+		  }},
 });
 
 
