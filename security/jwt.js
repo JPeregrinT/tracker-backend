@@ -42,9 +42,7 @@ const authRouter = express.Router();
          
        });
      } else {
-       return res
-         .status(500)
-         .json({ error: "Error creating new User :(", err  });
+      return res.status(500).json({ error: "Error creating new User :(", message: err.message });
          
      }
   }
@@ -79,9 +77,7 @@ const authRouter = express.Router();
       },
     });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ error:  "Error while logging in :(", error: err.message  });
+    return res.status(500).json({ error: "Error while logging in :(", error: err.message });
   }
 });
 
@@ -125,37 +121,36 @@ authRouter.get ('/user/:userId?', async (req, res) =>{
 //Modifica el perfil
 authRouter.post('/profile/modify/:userId?', (req, res) => {
   const data = req.body;
+  const updateFields = {};
+
+  // Build the update object with the modified fields
+  if (data.email) updateFields.email = data.email;
+  if (data.password) updateFields.password = data.password;
+  if (data.name) updateFields.name = data.name;
+  if (data.surName) updateFields.surName = data.surName;
+  if (data.gender) updateFields.gender = data.gender;
+  if (data.birthdate) updateFields.birthdate = data.birthdate;
+  if (data.phone) updateFields.phone = data.phone;
+  if (data.city) updateFields.city = data.city;
+  if (data.country) updateFields.country = data.country;
+  if (data.address) updateFields.address = data.address;
+  if (data.homeNumber) updateFields.homeNumber = data.homeNumber;
+  if (data.postCode) updateFields.postCode = data.postCode;
+  if (data.image) updateFields.userImage = data.image;
+
   User.findByIdAndUpdate(
-  req.params.userId,
-  
-  {
-      $set:
-       { email: data.email, 
-        password: data.password,
-        name: data.name,
-        surName: data.surName,
-        gender: data.gender,
-        birthdate: data.birthdate,
-        phone: data.phone,
-        city: data.city,
-        country: data.country,
-        address: data.address,
-        homeNumber: data.number,
-        postcode: data.postCode,
-        userImage: data.image,
-
-        upsert: false
-      }
-  },
-  {
-      new: true //actualiza datos
-  }
+    req.params.userId,
+    { $set: updateFields },
+    { new: true }
   )
-      .then(updatedUser => console.log('User updated: ', updatedUser))
-      .catch(error => res.status(400).json({error:'Error while updating the user '}))
-  res.status(200).send('User update finished')
-
-  })
+    .then(updatedUser => {
+      console.log('User updated: ', updatedUser);
+      res.status(200).send('User update finished');
+    })
+    .catch(error => {
+      res.status(400).json({ error: 'Error while updating the user.' });
+    });
+});
 
 module.exports = {
     authRouter,

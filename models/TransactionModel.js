@@ -14,7 +14,7 @@ const TransactionSchema = new mongoose.Schema({
         trim: true,
         validate: {
             validator: function (value) {
-                return /^-?\d+(\.\d{1,2})?(€)?$/.test(value);
+                return /^-?\d+(\.\d{1,2})?([A-Za-z]{1,3})?€?$/.test(value);
             },
             message: 'Invalid currency amount'
         }
@@ -56,4 +56,4 @@ TransactionSchema.post('validate', function(error, doc, next) {
 
 
 
-module.exports = mongoose.model('Income', TransactionSchema)
+  module.exports = mongoose.model('Transaction', TransactionSchema);
