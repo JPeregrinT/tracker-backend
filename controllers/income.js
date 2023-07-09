@@ -16,11 +16,8 @@ exports.addIncome = async (req, res) => {
     })
     try {
         //validations
-        if(!title || !category || !description || !date){
-            return res.status(400).json({message: 'All fields are required!'})
-        }
-        if(amount<=0 || typeof amount !== 'number'){
-            return res.status(400).json({message: 'Amount must be a positive number'})
+        if(!title || !category || !date){
+            return res.status(400).json({error: 'All fields are required!'})
         }
         console.log ("Esto es INCOME", income)
         
@@ -28,6 +25,12 @@ exports.addIncome = async (req, res) => {
         await income.save() 
        res.status(200).json({message: 'Income Added'})
     } catch (error){
+        if (error.name === 'ValidationError') {
+            // Handle the specific error message for invalid currency amount
+            if (error.errors.amount && error.errors.amount.message === 'Invalid currency amount') {
+              return res.status(400).json({ error: 'Invalid currency amount provided' });
+            }
+        }
         res.status(500).json(error => res.status(500).json({error:'Server error '}))
     }
 
