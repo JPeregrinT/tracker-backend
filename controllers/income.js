@@ -19,6 +19,7 @@ exports.addIncome = async (req, res) => {
         if(!title || !category || !date){
             return res.status(400).json({error: 'All fields are required!'})
         }
+        
         console.log ("Esto es INCOME", income)
         
         console.log("esto es date", date)

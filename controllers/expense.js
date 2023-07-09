@@ -3,7 +3,7 @@ const TransactionSchema= require("../models/TransactionModel")
 exports.addExpense = async (req, res) => {
     const {userId} = req.params;
     console.log(" esto es user id:", userId)
-    const {title, amount, category, description, date,} = req.body
+    const {title, amount, category, description, date} = req.body
 
     const expense = new TransactionSchema({
         title,
@@ -16,7 +16,7 @@ exports.addExpense = async (req, res) => {
     })
     try {
         //validations
-        if(!title || !category || !description || !date){
+        if(!title || !category  || !date){
             return res.status(400).json({error: 'All fields are required!'})
         }
         await expense.save() 
