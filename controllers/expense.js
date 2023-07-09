@@ -1,5 +1,5 @@
 const TransactionSchema= require("../models/TransactionModel")
-
+const Transaction = require("../models/TransactionModel");
 exports.addExpense = async (req, res) => {
     const {userId} = req.params;
     console.log(" esto es user id:", userId)
@@ -56,3 +56,27 @@ exports.deleteExpense = async (req, res) =>{
             res.status(500).json({message: 'Server Error'})
         })
 }
+exports.updateExpense = async (req, res) =>{
+    const data = req.body;
+    const updateFields = {};
+  
+    // Build the update object with the modified fields
+    if (data.title) updateFields.title = data.title;
+    if (data.amount) updateFields.amount = data.amount;
+    if (data.category) updateFields.category = data.category;
+    if (data.description) updateFields.description = data.description;
+    if (data.date) updateFields.date = data.date;
+  
+    Transaction.findByIdAndUpdate(
+      req.params.id,
+      { $set: updateFields },
+      { new: true }
+    )
+      .then(updatedExpense => {
+        console.log('Expense updated: ', updatedExpense);
+        res.status(200).send('Expense update finished');
+      })
+      .catch(error => {
+        res.status(400).json({ error: 'Error while updating the expense.' });
+      });
+  };
