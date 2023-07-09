@@ -14,7 +14,7 @@ const TransactionSchema = new mongoose.Schema({
         trim: true,
         validate: {
             validator: function (value) {
-                return /^-?\d+(\.\d{1,2})?([A-Za-z]{1,3})?€?$/.test(value);
+                return /^[-+]?[€$]?[-]?([0-9]+[€$]|[€$]?[0-9]+)(.[0-9]{1,2})?$/.test(value);
             },
             message: 'Invalid currency amount'
         }
@@ -36,7 +36,7 @@ const TransactionSchema = new mongoose.Schema({
     },
     description: {
         type: String, 
-        required: true,
+        required: false,
         maxLength: 20,
         trim: true
     },
