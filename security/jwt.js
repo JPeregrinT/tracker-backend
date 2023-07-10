@@ -41,7 +41,8 @@ const authRouter = express.Router();
         user: {
            email: savedUser.email,
            name: savedUser.name,
-          id: savedUser._id,
+           image: savedUser.userImage,
+          id: savedUser._id
          },
          
        });
@@ -77,6 +78,7 @@ const authRouter = express.Router();
       user: {
         email: foundUser.email,
         name: foundUser.name,
+        image: foundUser.userImage,
         id: foundUser._id,
       },
     });
