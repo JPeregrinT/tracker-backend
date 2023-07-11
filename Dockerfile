@@ -1,6 +1,6 @@
 FROM node:latest
 
-WORKDIR /app/backend
+WORKDIR /naranja-backend
 
 COPY . .
 
