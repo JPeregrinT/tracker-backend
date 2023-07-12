@@ -43,7 +43,7 @@ exports.deleteAvatar = async (req, res) => {
         if (!avatar) {
             return res.status(404).json({ message: 'Avatar not found' });
         }
-        avatar.userImage = undefined;
+        avatar.userImage = 'https://cdn1.iconfinder.com/data/icons/vibrancie-action/30/action_081-account-user-profile-avatar-512.png'
         await avatar.save();
         res.status(200).json({ message: 'Avatar image deleted' });
     } catch (err) {
