@@ -1,0 +1,20 @@
+version: 2
+services:
+  - name: frontend
+    env:
+      - REACT_APP_BACKEND_URL=http://localhost:5000
+      - JWT_SECRET=Patata
+    github:
+      branch: main
+      build:
+        command: npm run build
+
+  - name: backend
+    env:
+      - PORT=5000
+      - MONGO_URL=mongodb+srv://AdminUser:zTW1nBId78f5QLWG@expensescluster.2tpreas.mongodb.net/?retryWrites=true&w=majority
+      - JWT_SECRET=Patata
+    github:
+      branch: main
+      build:
+        command: npm run build
