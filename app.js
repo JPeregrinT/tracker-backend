@@ -4,7 +4,7 @@ const jwt = require ("jsonwebtoken");
 const { db } = require('./db/db')
 const {readdirSync} = require('fs')
 const app = express()
-const jwtSecret = process.env.JWT_SECRET;
+
 
 require('dotenv').config()
 
