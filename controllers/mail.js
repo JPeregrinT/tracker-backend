@@ -1,13 +1,14 @@
 const nodemailer = require('nodemailer');
 const { getMaxListeners } = require('../models/TransactionModel');
-
+const mailEmail = process.env.MAIL_EMAIL;
+const mailPassword = process.env.MAIL_PASSWORD
 function sendWelcomeEmail(name, email) {
     // Create a transporter
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: 'orangetracker05@gmail.com',
-        pass: 'pwmjyvihodckcltj'
+        user: mailEmail,
+        pass: mailPassword
       }
     });
   

@@ -1,6 +1,6 @@
 const { addIncome, getIncome, deleteIncome, updateIncome } = require('../controllers/income');
 const { addExpense, getExpense, deleteExpense, updateExpense } = require('../controllers/expense')
-const {getTransaction, getHistory, deleteTransaction, deleteAvatar} = require('../controllers/transaction')
+const {getTransaction, getHistory, deleteTransaction, deleteAvatar, filterExpense, filterIncome, filterTransaction} = require('../controllers/transaction')
 const { jwtMiddleware} = require("../security/jwt");
 const router = require ('express').Router()
 
@@ -18,5 +18,8 @@ router.post('/add-income/:userId', addIncome)
     .put('/update-income/:id', updateIncome)
     .put('/update-expense/:id', updateExpense)
     .delete('/delete-avatar/:id', deleteAvatar)
+    .get('/filter-expense/:userId', filterExpense)
+    .get('/filter-income/:userId', filterIncome)
+    .get('/filter-transaction/:userId', filterTransaction)
     
 module.exports = router
